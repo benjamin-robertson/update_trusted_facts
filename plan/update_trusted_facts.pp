@@ -15,6 +15,9 @@ plan update_trusted_facts::update_trusted_facts (
   # get targets
   $full_list = get_targets($targets)
 
+  # Create array of trusted facts
+  $trusted_fact_names = update_trusted_facts::trusted_fact_names()
+
   unless $full_list.empty {
     # Check connection to hosts. run_plan does not exit cleanly if there is a host which doesnt exist or isnt connected, We use this task
     # to check if hosts are valid and have a valid connection to PE. This can be switched to a faster running task to speed up plan 
@@ -26,4 +29,23 @@ plan update_trusted_facts::update_trusted_facts (
 
     # Update facts
     without_default_logging() || { run_plan(facts, targets => $full_list_success) }
+
+    # supported platforms
+    $supported_platforms = ['Debian', 'RedHat', 'windows']
+
+    $supported_targets = get_targets($full_list_success).filter | $target | {
+      $target.facts['os']['family'] in $supported_platforms
+    }
+
+    out::message("Supported targets are ${supported_targets}")
+
+    # Create hash with trusted facts
+    $new_trusted = $trusted_fact_names.reduce({}) | $memo, $value | {
+      if getvar($value) != undef {
+        $memo + { $value => getvar($value) }
+      }
+    }
+
+    out::message("Trusted facts are ${new_trusted}")
+  }
 }
