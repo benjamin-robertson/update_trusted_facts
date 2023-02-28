@@ -43,7 +43,8 @@ plan update_trusted_facts::update_trusted_facts (
     $new_trusted = $trusted_fact_names.reduce({}) | $memo, $value | {
       if getvar($value) != undef {
         $fact_value = getvar($value)
-        out::message("memo is ${memo} value is ${fact_value} type is ${type($value)}")
+        $empty_hash = {}
+        out::message("memo is ${memo} value is ${fact_value} type is ${type($empty_hash)}")
         $memo + { $value => $fact_value }
       }
     }
