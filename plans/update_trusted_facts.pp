@@ -41,14 +41,14 @@ plan update_trusted_facts::update_trusted_facts (
 
     out::message("Trusted facts are ${trusted_fact_names}")
 
-    $empty_hash = { key => 'value' }
-
     # Create hash with trusted facts
-    $new_trusted = $trusted_fact_names.reduce($empty_hash) | $memo, $value | {
-      if getvar($value[0]) != undef {
-        $fact_value = getvar($value[0])
+    $new_trusted = $trusted_fact_names.reduce({}) | $memo, $value | {
+      if getvar($value) != undef {
+        $fact_value = getvar($value)
         out::message("memo is ${memo} value is ${fact_value} type is ${type($memo)}")
-        $memo + { $value[0] => $fact_value }
+        $memo + { $value => $fact_value }
+      } else {
+        $memo
       }
     }
 
