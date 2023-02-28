@@ -45,7 +45,6 @@ plan update_trusted_facts::update_trusted_facts (
     $new_trusted = $trusted_fact_names.reduce({}) | $memo, $value | {
       if getvar($value) != undef {
         $fact_value = getvar($value)
-        out::message("memo is ${memo} value is ${fact_value} type is ${type($memo)}")
         $memo + { $value => $fact_value }
       } else {
         $memo
@@ -53,5 +52,8 @@ plan update_trusted_facts::update_trusted_facts (
     }
 
     out::message("Trusted facts are ${new_trusted}")
+
+    # next write ruby funciton to retried the yaml from the existing system. Merge the chanage from the new trusted facts.
+    # The set facts win over any existing facts set in csr_attributes
   }
 }

@@ -2,5 +2,4 @@
 # for more information on native puppet functions.
 function update_trusted_facts::trusted_fact_names() >> Array {
   $array = ['pp_role','pp_uuid','pp_environment','pp_apptier','pp_department','pp_datacenter']
-  # $hash = { 'pp_role' => '','pp_uuid' => '','pp_environment' => '','pp_apptier' => '','pp_department' => '','pp_datacenter' => '' }
 }
