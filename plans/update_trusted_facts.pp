@@ -43,7 +43,7 @@ plan update_trusted_facts::update_trusted_facts (
     $new_trusted = $trusted_fact_names.reduce({ 'rando' => 'random' }) | $memo, $value | {
       if getvar($value) != undef {
         $fact_value = getvar($value)
-        out::message("memo is ${memo} value is ${fact_value}")
+        out::message("memo is ${memo} value is ${fact_value} type is ${type($memo)}")
         $memo + { $value => $fact_value }
       }
     }
