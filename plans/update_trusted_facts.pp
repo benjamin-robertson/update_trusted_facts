@@ -42,7 +42,8 @@ plan update_trusted_facts::update_trusted_facts (
     # Create hash with trusted facts
     $new_trusted = $trusted_fact_names.reduce({}) | $memo, $value | {
       if getvar($value) != undef {
-        $memo + { $value => getvar($value) }
+        $fact_value = getvar($value)
+        $memo + { $value => $fact_value }
       }
     }
 
