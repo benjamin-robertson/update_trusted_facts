@@ -41,7 +41,7 @@ plan update_trusted_facts::update_trusted_facts (
 
     out::message("Trusted facts are ${trusted_fact_names}")
 
-    $empty_hash = {}
+    $empty_hash = { key => 'value' }
 
     # Create hash with trusted facts
     $new_trusted = $trusted_fact_names.reduce($empty_hash) | $memo, $value | {
