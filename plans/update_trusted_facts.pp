@@ -40,7 +40,7 @@ plan update_trusted_facts::update_trusted_facts (
     out::message("Supported targets are ${supported_targets}")
 
     # Create hash with trusted facts
-    $new_trusted = $trusted_fact_names.reduce({}) | $memo, $value | {
+    $new_trusted = $trusted_fact_names.reduce({ 'start' => 'value' }) | $memo, $value | {
       if getvar($value[0]) != undef {
         $fact_value = getvar($value[0])
         out::message("memo is ${memo} value is ${fact_value} type is ${type($memo)}")
