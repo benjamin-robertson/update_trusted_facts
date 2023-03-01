@@ -6,6 +6,7 @@ plan update_trusted_facts::update_trusted_facts (
   TargetSpec       $targets,
   String           $pe_primary_server,
   Boolean          $preserve_existing_facts = true,
+  Boolean          $noop                    = false,
   Optional[String] $pp_role                 = undef,
   Optional[String] $pp_uuid                 = undef,
   Optional[String] $pp_environment          = undef,
