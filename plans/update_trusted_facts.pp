@@ -55,5 +55,10 @@ plan update_trusted_facts::update_trusted_facts (
 
     # next write ruby funciton to retried the yaml from the existing system. Merge the chanage from the new trusted facts.
     # The set facts win over any existing facts set in csr_attributes
+
+    # print out trusted facts
+    $supported_targets.each | $target | {
+      out::mesasge("Target ${target} role is ${target.facts['trusted']['extensions']['pp_role']}")
+    }
   }
 }
