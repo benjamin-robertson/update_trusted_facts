@@ -90,6 +90,7 @@ else
   existing_csr['extension_requests'] = existing_facts
 end
 
+params = JSON.parse(STDIN.read)
 new_trusted_facts = params['trusted_facts']
 preserve_existing_facts = params['preserve_existing_facts']
 # new_trusted_facts = {'pp_role' => 'doge', 'pp_environment' => 'dog', 'pp_department' => 'blah', 'pp_datacenter' => 'louie'}
