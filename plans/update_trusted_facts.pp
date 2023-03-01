@@ -78,5 +78,13 @@ plan update_trusted_facts::update_trusted_facts (
                                           'trusted_facts'           => $new_trusted,
                                           'preserve_existing_facts' => $preserve_existing_facts,
                                           '_catch_errors'           => true )
+    $set_csr_attriubes_done = $set_csr_attriubes_results.ok_set
+    $set_csr_attriubes_done_names = $set_csr_attriubes_results.ok_set.names
+    $set_csr_attriubes_failed = $set_csr_attriubes_results.error_set.names
+    $set_csr_attriubes_successful_targets = $supported_targets - get_targets(set_csr_attriubes_failed)
+
+    # Regen agent certificate
+    $nodes_to_regen_cert = $set_csr_attriubes_done_names.reduce | String $memo, String $node | { "${memo},${node}" }
+    out::message("Agents to purge are ${nodes_to_regen_cert}")
   }
 }
