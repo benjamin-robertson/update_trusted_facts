@@ -8,6 +8,7 @@ require 'open3'
 require 'puppet'
 require 'openssl'
 require 'yaml'
+require 'json'
 
 
 def get_cert_location
