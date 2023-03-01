@@ -8,7 +8,7 @@
       "type": "Hash"
     },
     "preserve_existing_csr": {
-      "description": "Preserve existing csr values",
+      "description": "Preserve existing trusted facts",
       "type": "Boolean"
     }
   }

@@ -5,12 +5,31 @@
 plan update_trusted_facts::update_trusted_facts (
   TargetSpec       $targets,
   String           $pe_primary_server,
-  Optional[String] $pp_role            = undef,
-  Optional[String] $pp_uuid            = undef,
-  Optional[String] $pp_environment     = undef,
-  Optional[String] $pp_apptier         = undef,
-  Optional[String] $pp_department      = undef,
-  Optional[String] $pp_datacenter      = undef,
+  Optional[String] $pp_role             = undef,
+  Optional[String] $pp_uuid             = undef,
+  Optional[String] $pp_environment      = undef,
+  Optional[String] $pp_apptier          = undef,
+  Optional[String] $pp_department       = undef,
+  Optional[String] $pp_datacenter       = undef,
+  Optional[String] $pp_instance_id      = undef,
+  Optional[String] $pp_image_name       = undef,
+  Optional[String] $pp_preshared_key    = undef,
+  Optional[String] $pp_cost_center      = undef,
+  Optional[String] $pp_product          = undef,
+  Optional[String] $pp_project          = undef,
+  Optional[String] $pp_application      = undef,
+  Optional[String] $pp_service          = undef,
+  Optional[String] $pp_employee         = undef,
+  Optional[String] $pp_created_by       = undef,
+  Optional[String] $pp_software_version = undef,
+  Optional[String] $pp_cluster          = undef,
+  Optional[String] $pp_provisioner      = undef,
+  Optional[String] $pp_region           = undef,
+  Optional[String] $pp_zone             = undef,
+  Optional[String] $pp_network          = undef,
+  Optional[String] $pp_securitypolicy   = undef,
+  Optional[String] $pp_cloudplatform    = undef,
+  Optional[String] $pp_hostname         = undef,
 ) {
   # get targets
   $full_list = get_targets($targets)
@@ -52,9 +71,6 @@ plan update_trusted_facts::update_trusted_facts (
     }
 
     out::message("Trusted facts are ${new_trusted}")
-
-    # next write ruby funciton to retried the yaml from the existing system. Merge the chanage from the new trusted facts.
-    # The set facts win over any existing facts set in csr_attributes
 
     # print out trusted facts
     $supported_targets.each | $target | {
