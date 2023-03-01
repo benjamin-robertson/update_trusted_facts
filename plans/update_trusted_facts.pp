@@ -58,7 +58,8 @@ plan update_trusted_facts::update_trusted_facts (
 
     # print out trusted facts
     $supported_targets.each | $target | {
-      out::mesasge("Target ${target} role is ${target.facts['trusted']['extensions']['pp_role']}")
+      # out::mesasge("Target ${target} role is ${target.facts['trusted']['extensions']['pp_role']}")
+      out::mesasge("Target ${target} role is ${target.facts['assessor']}")
     }
   }
 }
