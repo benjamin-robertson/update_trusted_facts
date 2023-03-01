@@ -91,14 +91,14 @@ else
 end
 
 new_trusted_facts = params['trusted_facts']
-preserve_existing_csr = params['preserve_existing_csr']
+preserve_existing_facts = params['preserve_existing_facts']
 # new_trusted_facts = {'pp_role' => 'doge', 'pp_environment' => 'dog', 'pp_department' => 'blah', 'pp_datacenter' => 'louie'}
 
 puts "Existing facts are #{existing_csr}"
 puts "New facts are #{new_trusted_facts}"
 
 # Merge the hash
-if existing_csr == nil or preserve_existing_csr == false
+if existing_csr == nil or preserve_existing_facts == false
   merged_csr = { 'extension_requests' => new_trusted_facts }
 else
   merged_csr = merge_facts(existing_csr, new_trusted_facts)
