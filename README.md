@@ -23,7 +23,7 @@ Furthermore this plan preserves all existing facts on an agent certificate and d
 
 ## Setup
 
-### What update_trusted_facts affects **OPTIONAL**
+### What update_trusted_facts affects
 
 This module affects the following
 
@@ -38,33 +38,19 @@ Include the module within your Puppetfile.
 
 Run the plan **update_trusted_facts::update_trusted_facts** from the Puppet Enterprise console. 
 
-Required parameters
+**Required parameters**
 - pe_primary_server (FQDN)
-- targets (TargetSpec - see https://www.puppet.com/docs/bolt/latest/bolt_types_reference.html#targetspec)
+- targets (TargetSpec - [see here](https://www.puppet.com/docs/bolt/latest/bolt_types_reference.html#targetspec))
 
 Targets can be specified as a comma separated list to run the plan on multiple host at a time.
 
-Optional parameters
+**Optional parameters**
 - preserve_existing_facts (Boolean - whether to keep existing facts. Running the plan with this option set to true and no facts set will clear all trusted facts)
 - 
-
-
-## Limitations
-
-In the Limitations section, list any incompatibilities, known issues, or other
-warnings.
 
 ## Development
 
 In the Development section, tell other users the ground rules for contributing
 to your project and how they should submit their work.
 
-## Release Notes/Contributors/Etc. **Optional**
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel are
-necessary or important to include here. Please use the `##` header.
-
-[1]: https://puppet.com/docs/pdk/latest/pdk_generating_modules.html
-[2]: https://puppet.com/docs/puppet/latest/puppet_strings.html
-[3]: https://puppet.com/docs/puppet/latest/puppet_strings_style.html
