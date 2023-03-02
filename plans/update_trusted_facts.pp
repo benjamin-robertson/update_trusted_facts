@@ -75,7 +75,8 @@ plan update_trusted_facts::update_trusted_facts (
                                                   '_catch_errors'             => true )
     $ok_set_length = length("${confirm_pe_primary_server_results.ok_set}")
     out::message("Results are ${ok_set_length}")
-    if length("${confirm_pe_primary_server_results.ok_set}") == 0 {
+    out::message("Results are ${confirm_pe_primary_server_results.ok_set}")
+    if length("${confirm_pe_primary_server_results.ok_set}") <= 2 {
       fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${pe_server_target.name} ")
     }
 
