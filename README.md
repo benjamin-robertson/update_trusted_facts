@@ -1,10 +1,6 @@
 # update_trusted_facts
 
-Welcome to your new module. A short overview of the generated parts can be found
-in the [PDK documentation][1].
-
-The README template below provides a starting point with details about what
-information to include in your README.
+Module contains a plan to update trusted facts on nodes in Puppet Enterprise via the console. 
 
 ## Table of Contents
 
@@ -19,82 +15,39 @@ information to include in your README.
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your
-module does and what kind of problems users can solve with it.
+The built in method to update trusted facts in Puppet enterprise requires root shell access to the Puppet primary server. This level of access is generally not available for all users in an organisation and provides significant more access that what should be granted to perform this tasks. 
 
-This should be a fairly short description helps the user decide if your module
-is what they want.
+By using this module, fine grained access can be granted to specific users to update trusted facts via the **update_trusted_facts** plan from the console.
+
+Furthermore this plan preserves all existing facts on an agent certificate and does not rely on the csr_attributes.yaml file being present with the correct data.
 
 ## Setup
 
 ### What update_trusted_facts affects **OPTIONAL**
 
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
+This module affects the following
 
-If there's more that they should know about, though, this is the place to
-mention:
-
-* Files, packages, services, or operations that the module will alter, impact,
-  or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section here.
+* Updates the csr_attributes.yaml file on systems. Taking the existing trusted facts from agent certificate and merging the proposed changes set in the plan. Existing values in csr_attributes.yaml will be replaced during this process **This occurs when the plan is run in noop**
+* Regenerates the agent certificate using the *puppet infrastructure run regenerate_agent_certificate* **Does not perform this step in noop**
 
 ### Beginning with update_trusted_facts
 
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most basic
-use of the module.
+Include the module within your Puppetfile. 
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your
-users how to use your module to solve problems, and be sure to include code
-examples. Include three to five examples of the most important or common tasks a
-user can accomplish with your module. Show users how to accomplish more complex
-tasks that involve different types, classes, and functions working in tandem.
+Run the plan **update_trusted_facts::update_trusted_facts** from the Puppet Enterprise console. 
 
-## Reference
+Required parameters
+- pe_primary_server (FQDN)
+- targets (TargetSpec - see https://www.puppet.com/docs/bolt/latest/bolt_types_reference.html#targetspec)
 
-This section is deprecated. Instead, add reference information to your code as
-Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your
-module. For details on how to add code comments and generate documentation with
-Strings, see the [Puppet Strings documentation][2] and [style guide][3].
+Targets can be specified as a comma separated list to run the plan on multiple host at a time.
 
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the
-root of your module directory and list out each of your module's classes,
-defined types, facts, functions, Puppet tasks, task plans, and resource types
-and providers, along with the parameters for each.
+Optional parameters
+- preserve_existing_facts (Boolean - whether to keep existing facts. Running the plan with this option set to true and no facts set will clear all trusted facts)
+- 
 
-For each element (class, defined type, function, and so on), list:
-
-* The data type, if applicable.
-* A description of what the element does.
-* Valid values, if the data type doesn't make it obvious.
-* Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
-```
 
 ## Limitations
 
