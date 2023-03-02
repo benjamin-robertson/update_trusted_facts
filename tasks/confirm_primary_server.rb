@@ -7,7 +7,7 @@ require 'open3'
 require 'json'
 
 def get_primary_hostname(ignore_infra_status_error)
-    output, status = Open3.capture2('puppet infrastruc1ture status')
+    output, status = Open3.capture2('puppet infrastructure status')
     if ignore_infra_status_error == false
       if status.exitstatus != 0
           puts "puppet infrastructure status exited uncleanly #{status}"  
