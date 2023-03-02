@@ -4,34 +4,35 @@
 #
 plan update_trusted_facts::update_trusted_facts (
   TargetSpec       $targets,
-  String           $pe_primary_server,
-  Boolean          $preserve_existing_facts = true,
-  Boolean          $noop                    = false,
-  Optional[String] $pp_role                 = undef,
-  Optional[String] $pp_uuid                 = undef,
-  Optional[String] $pp_environment          = undef,
-  Optional[String] $pp_apptier              = undef,
-  Optional[String] $pp_department           = undef,
-  Optional[String] $pp_datacenter           = undef,
-  Optional[String] $pp_instance_id          = undef,
-  Optional[String] $pp_image_name           = undef,
-  Optional[String] $pp_preshared_key        = undef,
-  Optional[String] $pp_cost_center          = undef,
-  Optional[String] $pp_product              = undef,
-  Optional[String] $pp_project              = undef,
-  Optional[String] $pp_application          = undef,
-  Optional[String] $pp_service              = undef,
-  Optional[String] $pp_employee             = undef,
-  Optional[String] $pp_created_by           = undef,
-  Optional[String] $pp_software_version     = undef,
-  Optional[String] $pp_cluster              = undef,
-  Optional[String] $pp_provisioner          = undef,
-  Optional[String] $pp_region               = undef,
-  Optional[String] $pp_zone                 = undef,
-  Optional[String] $pp_network              = undef,
-  Optional[String] $pp_securitypolicy       = undef,
-  Optional[String] $pp_cloudplatform        = undef,
-  Optional[String] $pp_hostname             = undef,
+  Target           $pe_primary_server,
+  Boolean          $preserve_existing_facts   = true,
+  Boolean          $ignore_infra_status_error = false,
+  Boolean          $noop                      = false,
+  Optional[String] $pp_role                   = undef,
+  Optional[String] $pp_uuid                   = undef,
+  Optional[String] $pp_environment            = undef,
+  Optional[String] $pp_apptier                = undef,
+  Optional[String] $pp_department             = undef,
+  Optional[String] $pp_datacenter             = undef,
+  Optional[String] $pp_instance_id            = undef,
+  Optional[String] $pp_image_name             = undef,
+  Optional[String] $pp_preshared_key          = undef,
+  Optional[String] $pp_cost_center            = undef,
+  Optional[String] $pp_product                = undef,
+  Optional[String] $pp_project                = undef,
+  Optional[String] $pp_application            = undef,
+  Optional[String] $pp_service                = undef,
+  Optional[String] $pp_employee               = undef,
+  Optional[String] $pp_created_by             = undef,
+  Optional[String] $pp_software_version       = undef,
+  Optional[String] $pp_cluster                = undef,
+  Optional[String] $pp_provisioner            = undef,
+  Optional[String] $pp_region                 = undef,
+  Optional[String] $pp_zone                   = undef,
+  Optional[String] $pp_network                = undef,
+  Optional[String] $pp_securitypolicy         = undef,
+  Optional[String] $pp_cloudplatform          = undef,
+  Optional[String] $pp_hostname               = undef,
 ) {
   # get targets
   $full_list = get_targets($targets)
@@ -64,7 +65,15 @@ plan update_trusted_facts::update_trusted_facts (
 
     out::message("Supported targets are ${remove_any_pe_targets}")
 
-    out::message("Trusted facts are ${trusted_fact_names}")
+    out::message("pe_primary length is  ${pe_primary_server.length} and target is ${pe_primary_server}")
+    # Confirm the pe_primary_server is the primary server. This can only be run on the primary server.
+    $confirm_pe_primary_server_results = run_task('update_trusted_facts::confirm_primary_server', $pe_primary_server,
+                                                  'pe_primary_server'         => $pe_primary_server.name,
+                                                  'ignore_infra_status_error' => $ignore_infra_status_error,
+                                                  '_catch_errors'             => true )
+    if $confirm_pe_primary_server_results.ok_set.name.length == 0 {
+      fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${pe_primary_server.name} ")
+    }
 
     # Create hash with trusted facts
     $new_trusted = $trusted_fact_names.reduce({}) | $memo, $value | {
