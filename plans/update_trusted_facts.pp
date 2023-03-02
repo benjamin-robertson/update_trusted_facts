@@ -73,6 +73,7 @@ plan update_trusted_facts::update_trusted_facts (
                                                   'pe_primary_server'         => $pe_server_target.name,
                                                   'ignore_infra_status_error' => $ignore_infra_status_error,
                                                   '_catch_errors'             => true )
+    out::message("Results are ${confirm_pe_primary_server_results.ok_set}")
     if $confirm_pe_primary_server_results.ok_set == undef {
       fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${pe_server_target.name} ")
     }
