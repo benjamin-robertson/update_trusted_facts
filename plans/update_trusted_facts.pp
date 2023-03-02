@@ -1,6 +1,45 @@
-# @summary PE plan to update trusted facts on a certificate, while preserving existing trusted facts.
+# @summary PE plan to update trusted facts on a certificate via Puppet enterprise console, while preserving existing trusted facts.
 #
+# lint:ignore:140chars
+# 
+# This plans allows for the easy modification of trusted facts on already deployed nodes via the Puppet Enterprise console.
+# It will preserve the existing trusted facts by reading the existing certificate and merging any proposed changes over existing. This behaviour can be changed by setting the preserve_existing_facts parameter to false
+# We require the Puppet Primary to be specified when runing the plan due to limitations of running plans in orchestor. 
 #
+# To learn more about Puppet plans, see documentation:
+# - http://pup.pt/bolt-puppet-plans
+# - https://www.puppet.com/docs/pe/2021.7/plans_limitations.html
+#
+# @param targets The targets to run on (note this must match the certnames used by Puppet / shown in PE console).
+# @param pe_primary_server The Puppet Enterprise primary server in your PE installation. 
+# @param preserve_existing_facts Whether to preserve existing facts from the nodes. If set all existing facts will be wiped and replace with those set in the plan. Default: true
+# @param ignore_infra_status_error Ignore errors from 'puppet infrastructure status' command. This is used to verify the primary server. Can be use to still allow the plan the run when some PE components a unavaliable. Default: false
+# @param noop Run the plan noop. csr_attributes.yaml will still generated however certificates will not be resigned. Default: falsa
+# @param pp_role Set the pp_role trusted fact. Default: undef
+# @param pp_uuid Set the pp_uuid trusted fact. Default: undef
+# @param pp_environment Set the pp_environment trusted fact. Default: undef
+# @param pp_apptier Set the pp_apptier trusted fact. Default: undef
+# @param pp_department Set the pp_department trusted fact. Default: undef
+# @param pp_datacenter Set the pp_datacenter trusted fact. Default: undef
+# @param pp_instance_id Set the pp_instance_id trusted fact. Default: undef
+# @param pp_image_name Set the pp_image_name trusted fact. Default: undef
+# @param pp_preshared_key Set the pp_preshared_key trusted fact. Default: undef
+# @param pp_cost_center Set the pp_cost_center trusted fact. Default: undef
+# @param pp_product Set the pp_product trusted fact. Default: undef
+# @param pp_project Set the pp_project trusted fact. Default: undef
+# @param pp_application Set the pp_application trusted fact. Default: undef
+# @param pp_service Set the pp_service trusted fact. Default: undef
+# @param pp_employee Set the pp_employee trusted fact. Default: undef
+# @param pp_created_by Set the pp_created_by trusted fact. Default: undef
+# @param pp_software_version Set the pp_software_version trusted fact. Default: undef
+# @param pp_cluster Set the pp_cluster trusted fact. Default: undef
+# @param pp_provisioner Set the pp_provisioner trusted fact. Default: undef
+# @param pp_region Set the pp_region trusted fact. Default: undef
+# @param pp_zone Set the pp_zone trusted fact. Default: undef
+# @param pp_network Set the pp_network trusted fact. Default: undef
+# @param pp_securitypolicy Set the pp_securitypolicy trusted fact. Default: undef
+# @param pp_cloudplatform Set the pp_cloudplatform trusted fact. Default: undef
+# @param pp_hostname Set the pp_hostname trusted fact. Default: undef
 #
 plan update_trusted_facts::update_trusted_facts (
   TargetSpec       $targets,
@@ -109,3 +148,4 @@ plan update_trusted_facts::update_trusted_facts (
     }
   }
 }
+# lint:endignore
