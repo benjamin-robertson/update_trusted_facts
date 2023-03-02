@@ -57,8 +57,12 @@ plan update_trusted_facts::update_trusted_facts (
     $supported_targets = get_targets($full_list_success).filter | $target | {
       $target.facts['os']['family'] in $supported_platforms
     }
+    # remove any pe servers from targets, we dont support updating facts on puppet enterprise
+    $remove_any_pe_targets = get_targets($supported_targets).filter | $target | {
+      $target.facts['is_pe'] == false
+    }
 
-    out::message("Supported targets are ${supported_targets}")
+    out::message("Supported targets are ${remove_any_pe_targets}")
 
     out::message("Trusted facts are ${trusted_fact_names}")
 
@@ -87,10 +91,10 @@ plan update_trusted_facts::update_trusted_facts (
     # Regen agent certificate
     $nodes_to_regen_cert = $set_csr_attriubes_done_names.reduce | String $memo, String $node | { "${memo},${node}" }
     out::message("Nodes to regen certs on ${nodes_to_regen_cert}")
-    if $nodes_to_regen_cert != undef {
-      if $noop != true {
-        run_command("puppet infrastructure run regenerate_agent_certificate agent=${nodes_to_regen_cert}", $pe_primary_server)
-      }
-    }
+    # if $nodes_to_regen_cert != undef {
+    #   if $noop != true {
+    #     run_command("puppet infrastructure run regenerate_agent_certificate agent=${nodes_to_regen_cert}", $pe_primary_server)
+    #   }
+    # }
   }
 }
