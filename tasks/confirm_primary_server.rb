@@ -4,7 +4,7 @@
 # Task to verify if the server its running on is in fact the Puppet Primary server
 
 require 'open3'
-require 'json'
+# require 'json'
 
 def get_primary_hostname(ignore_infra_status_error)
     output, status = Open3.capture2('puppet infrastructure status')
