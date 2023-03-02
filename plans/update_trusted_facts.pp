@@ -67,7 +67,7 @@ plan update_trusted_facts::update_trusted_facts (
 
     $pe_server_target = get_target($pe_primary_server)
 
-    out::message("pe_primary length is  ${pe_server_target.length} and target is ${pe_server_target}")
+    out::message("target is ${pe_server_target}")
     # Confirm the pe_primary_server is the primary server. This can only be run on the primary server.
     $confirm_pe_primary_server_results = run_task('update_trusted_facts::confirm_primary_server', $pe_server_target,
                                                   'pe_primary_server'         => $pe_server_target.name,
