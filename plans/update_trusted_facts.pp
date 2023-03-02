@@ -67,15 +67,12 @@ plan update_trusted_facts::update_trusted_facts (
 
     $pe_server_target = get_target($pe_primary_server)
 
-    out::message("target is ${pe_server_target}")
     # Confirm the pe_primary_server is the primary server. This can only be run on the primary server.
     $confirm_pe_primary_server_results = run_task('update_trusted_facts::confirm_primary_server', $pe_server_target,
                                                   'pe_primary_server'         => $pe_server_target.name,
                                                   'ignore_infra_status_error' => $ignore_infra_status_error,
                                                   '_catch_errors'             => true )
     $ok_set_length = length("${confirm_pe_primary_server_results.ok_set}")
-    out::message("Results are ${ok_set_length}")
-    out::message("Results are ${confirm_pe_primary_server_results.ok_set}")
     if length("${confirm_pe_primary_server_results.ok_set}") <= 2 {
       fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${pe_server_target.name} ")
     }
