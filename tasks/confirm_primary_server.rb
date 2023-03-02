@@ -10,16 +10,16 @@ def get_primary_hostname(ignore_infra_status_error)
     output, status = Open3.capture2('puppet infrastructure status')
     if ignore_infra_status_error == false
       if status.exitstatus != 0
-          puts "puppet infrastructure status exited uncleanly #{status}"  
-          exit 1
+        puts "puppet infrastructure status exited uncleanly #{status}"
+        exit 1
       end
     end
-    output.each_line { | line |
+    do output.each_line | line |
       if line.match(/^Primary: /)
         primary = line.gsub(/^Primary: /,'').lstrip.rstrip
         return primary
       end
-    }
+    end
     puts "No Primary server found in output. Are you sure you specified the correct server as primary?"
     exit 1
 end

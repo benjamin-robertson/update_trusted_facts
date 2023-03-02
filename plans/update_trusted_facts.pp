@@ -1,6 +1,6 @@
 # @summary PE plan to update trusted facts on a certificate via Puppet enterprise console, while preserving existing trusted facts.
 #
-# lint:ignore:140chars
+# lint:ignore:140chars:2sp_soft_tabs-check
 # 
 # This plans allows for the easy modification of trusted facts on already deployed nodes via the Puppet Enterprise console.
 # It will preserve the existing trusted facts by reading the existing certificate and merging any proposed changes over existing. This behaviour can be changed by setting the preserve_existing_facts parameter to false
