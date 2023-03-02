@@ -1,7 +1,7 @@
 #!/opt/puppetlabs/puppet/bin/ruby
 # frozen_string_literal: true
 
-# Task whichs recreates the csr_attributes on a system from the existing certificate and merges a new set of trusted fact. 
+# Task whichs recreates the csr_attributes on a system from the existing certificate and merges a new set of trusted fact.
 # Writes out a new CSR preservering any custom_attributes set.
 
 require 'open3'
@@ -10,16 +10,15 @@ require 'openssl'
 require 'yaml'
 require 'json'
 
-
 def get_cert_location
   if Gem.win_platform?
-    command = '/opt/puppetlabs/bin/puppet config print hostcert' # need to set for windows
+    command = "'C:\\Program Files\\Puppet Labs\\Puppet\\bin\\puppet.bat' config print hostcert"
   else
     command = '/opt/puppetlabs/bin/puppet config print hostcert'
   end
   output, status = Open3.capture2(command)
   if status.exitstatus != 0
-    puts "failed to get cert location from puppet config command #{status}"  
+    puts "failed to get cert location from puppet config command #{status}"
     exit 1
   end
   output.lstrip!
@@ -30,12 +29,12 @@ def read_trusted_facts(cert_location, trusted_facts_oid)
   trusted_fact_results = {}
   cert_data = File.open cert_location
   certificate = OpenSSL::X509::Certificate.new cert_data
-  certificate.extensions.each do | element | 
-    trusted_facts_oid.each { | name, oid | 
+  certificate.extensions.each do |element|
+    trusted_facts_oid.each do |name, oid|
       if element.oid == name or element.oid == oid
         trusted_fact_results[name] = element.value.to_s.gsub(/^\.\n/, '').gsub(/^\../, '')
       end
-    }
+    end
   end
   trusted_fact_results
 end
@@ -52,7 +51,7 @@ def csr_attribute_location
 end
 
 def get_existing_csr(csr_attr_file_location)
-  if File.exists?(csr_attr_file_location)
+  if File.exist?(csr_attr_file_location)
     data = YAML.safe_load(File.read(csr_attr_file_location))
   else
     nil
