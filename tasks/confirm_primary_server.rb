@@ -14,7 +14,7 @@ def get_primary_hostname(ignore_infra_status_error)
         exit 1
       end
     end
-    do output.each_line | line |
+    output.each_line do | line |
       if line.match(/^Primary: /)
         primary = line.gsub(/^Primary: /,'').lstrip.rstrip
         return primary
