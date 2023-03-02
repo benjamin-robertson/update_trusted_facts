@@ -79,7 +79,7 @@ plan update_trusted_facts::update_trusted_facts (
     out::message("Trusted facts are ${new_trusted}")
 
     # Run task to generate csr_attributes
-    $set_csr_attriubes_results = run_task('update_trusted_facts::set_csr_attributes', $supported_targets,
+    $set_csr_attriubes_results = run_task('update_trusted_facts::set_csr_attributes', $remove_any_pe_targets,
                                           'trusted_facts'           => $new_trusted,
                                           'preserve_existing_facts' => $preserve_existing_facts,
                                           '_catch_errors'           => true )
@@ -91,10 +91,10 @@ plan update_trusted_facts::update_trusted_facts (
     # Regen agent certificate
     $nodes_to_regen_cert = $set_csr_attriubes_done_names.reduce | String $memo, String $node | { "${memo},${node}" }
     out::message("Nodes to regen certs on ${nodes_to_regen_cert}")
-    # if $nodes_to_regen_cert != undef {
-    #   if $noop != true {
-    #     run_command("puppet infrastructure run regenerate_agent_certificate agent=${nodes_to_regen_cert}", $pe_primary_server)
-    #   }
-    # }
+    if $nodes_to_regen_cert != undef {
+      if $noop != true {
+        run_command("puppet infrastructure run regenerate_agent_certificate agent=${nodes_to_regen_cert}", $pe_primary_server)
+      }
+    }
   }
 }
