@@ -4,7 +4,7 @@
 #
 plan update_trusted_facts::update_trusted_facts (
   TargetSpec       $targets,
-  Target           $pe_primary_server,
+  Stdlib::Fqdn     $pe_primary_server,
   Boolean          $preserve_existing_facts   = true,
   Boolean          $ignore_infra_status_error = false,
   Boolean          $noop                      = false,
@@ -65,14 +65,16 @@ plan update_trusted_facts::update_trusted_facts (
 
     out::message("Supported targets are ${remove_any_pe_targets}")
 
-    out::message("pe_primary length is  ${pe_primary_server.length} and target is ${pe_primary_server}")
+    $pe_server_target = get_targets($pe_primary_server)
+
+    out::message("pe_primary length is  ${pe_server_target.length} and target is ${pe_server_target}")
     # Confirm the pe_primary_server is the primary server. This can only be run on the primary server.
-    $confirm_pe_primary_server_results = run_task('update_trusted_facts::confirm_primary_server', $pe_primary_server,
-                                                  'pe_primary_server'         => $pe_primary_server.name,
+    $confirm_pe_primary_server_results = run_task('update_trusted_facts::confirm_primary_server', $pe_server_target,
+                                                  'pe_primary_server'         => $pe_server_target.name,
                                                   'ignore_infra_status_error' => $ignore_infra_status_error,
                                                   '_catch_errors'             => true )
     if $confirm_pe_primary_server_results.ok_set.name.length == 0 {
-      fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${pe_primary_server.name} ")
+      fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${pe_server_target.name} ")
     }
 
     # Create hash with trusted facts
