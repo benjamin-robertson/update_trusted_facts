@@ -7,7 +7,6 @@ Module contains a plan to update trusted facts on nodes in Puppet Enterprise via
 1. [Description](#description)
 1. [Setup - The basics of getting started with update_trusted_facts](#setup)
     * [What update_trusted_facts affects](#what-update_trusted_facts-affects)
-    * [Setup requirements](#setup-requirements)
     * [Beginning with update_trusted_facts](#beginning-with-update_trusted_facts)
 1. [Usage - Configuration options and additional functionality](#usage)
 1. [Limitations - OS compatibility, etc.](#limitations)
@@ -46,11 +45,50 @@ Targets can be specified as a comma separated list to run the plan on multiple h
 
 **Optional parameters**
 - preserve_existing_facts (Boolean - whether to keep existing facts. Running the plan with this option set to true and no facts set will clear all trusted facts)
-- 
+- ignore_infra_status_error (Boolean - Ignore errors from *puppet infrastructure status* command. May allow the plan to operate if some Puppet infrastructure components are failing)
+- noop (Boolean - Run the plan in noop. csr_attributes.yaml will still generated however certificates will not be resigned.)
+
+**Trusted facts supported**
+The following trusted facts are supported by the plan. All are optional parameters, set as required. All accept String as input
+- pp_role
+- pp_uuid
+- pp_environment
+- pp_apptier
+- pp_department
+- pp_datacenter
+- pp_instance_id
+- pp_image_name
+- pp_preshared_key
+- pp_cost_center
+- pp_product
+- pp_project
+- pp_application
+- pp_service
+- pp_employee 
+- pp_created_by
+- pp_software_version
+- pp_cluster
+- pp_provisioner
+- pp_region
+- pp_zone
+- pp_network
+- pp_securitypolicy
+- pp_cloudplatform
+- pp_hostname
+
+## Limitations
+
+Tested with the following combinations. Expected to work for all Windows, Enterprise Linux, Debian, Ubuntu versions. 
+
+Puppet Enterprise
+- 2021.7.2 
+
+Puppet Nodes
+- Windows 2019
+- RHEL 8
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing
-to your project and how they should submit their work.
+If you find any issues with this module, please log them in the issues register of the GitHub project. [Issues][1]
 
-
+[1]: https://github.com/benjamin-robertson/update_trusted_facts/issues
