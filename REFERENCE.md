@@ -6,7 +6,7 @@
 
 ### Functions
 
-* [`update_trusted_facts::trusted_fact_names`](#update_trusted_factstrusted_fact_names): See https://puppet.com/docs/puppet/latest/lang_write_functions_in_puppet.html for more information on native puppet functions. lint:ignore:14
+* [`update_trusted_facts::trusted_fact_names`](#update_trusted_factstrusted_fact_names): Returns an array of trusted facts lint:ignore:140chars
 
 ### Tasks
 
@@ -23,14 +23,12 @@
 
 Type: Puppet Language
 
-See https://puppet.com/docs/puppet/latest/lang_write_functions_in_puppet.html
-for more information on native puppet functions.
+Returns an array of trusted facts
 lint:ignore:140chars
 
 #### `update_trusted_facts::trusted_fact_names()`
 
-See https://puppet.com/docs/puppet/latest/lang_write_functions_in_puppet.html
-for more information on native puppet functions.
+Returns an array of trusted facts
 lint:ignore:140chars
 
 Returns: `Array`
