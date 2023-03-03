@@ -12,9 +12,9 @@
 #
 # @param targets The targets to run on (note this must match the certnames used by Puppet / shown in PE console).
 # @param pe_primary_server The Puppet Enterprise primary server in your PE installation. 
-# @param preserve_existing_facts Whether to preserve existing facts from the nodes. If set to false all existing facts will be wiped and replace with those set in the plan. Default: true
-# @param ignore_infra_status_error Ignore errors from 'puppet infrastructure status' command. This is used to verify the primary server. Can be use to still allow the plan the run when some PE components a unavaliable. Default: false
-# @param noop Run the plan noop. csr_attributes.yaml will still generated however certificates will not be resigned. Default: false
+# @param preserve_existing_facts Whether to preserve existing facts from the nodes. If set to false all existing facts will be wiped and replaced with those set in the plan. Default: true
+# @param ignore_infra_status_error Ignore errors from 'puppet infrastructure status' command. This is used to verify the primary server. Can be used to allow the plan the run when some PE components are unavaliable. Default: false
+# @param noop Run the plan in noop. csr_attributes.yaml will still generated, however certificates will not be resigned. Default: false
 # @param pp_role Set the pp_role trusted fact. Default: undef
 # @param pp_uuid Set the pp_uuid trusted fact. Default: undef
 # @param pp_environment Set the pp_environment trusted fact. Default: undef

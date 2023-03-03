@@ -79,7 +79,7 @@ Preserve existing trusted facts
 
 ### <a name="update_trusted_factsupdate_trusted_facts"></a>`update_trusted_facts::update_trusted_facts`
 
-lint:ignore:140chars:2sp_soft_tabs-check
+lint:ignore:140chars lint:ignore:strict_indent
 
 This plans allows for the easy modification of trusted facts on already deployed nodes via the Puppet Enterprise console.
 It will preserve the existing trusted facts by reading the existing certificate and merging any proposed changes over existing. This behaviour can be changed by setting the preserve_existing_facts parameter to false
@@ -140,7 +140,7 @@ The Puppet Enterprise primary server in your PE installation.
 
 Data type: `Boolean`
 
-Whether to preserve existing facts from the nodes. If set to false all existing facts will be wiped and replace with those set in the plan. Default: true
+Whether to preserve existing facts from the nodes. If set to false all existing facts will be wiped and replaced with those set in the plan. Default: true
 
 Default value: ``true``
 
@@ -148,7 +148,7 @@ Default value: ``true``
 
 Data type: `Boolean`
 
-Ignore errors from 'puppet infrastructure status' command. This is used to verify the primary server. Can be use to still allow the plan the run when some PE components a unavaliable. Default: false
+Ignore errors from 'puppet infrastructure status' command. This is used to verify the primary server. Can be used to allow the plan the run when some PE components are unavaliable. Default: false
 
 Default value: ``false``
 
@@ -156,7 +156,7 @@ Default value: ``false``
 
 Data type: `Boolean`
 
-Run the plan noop. csr_attributes.yaml will still generated however certificates will not be resigned. Default: false
+Run the plan in noop. csr_attributes.yaml will still generated, however certificates will not be resigned. Default: false
 
 Default value: ``false``
 
