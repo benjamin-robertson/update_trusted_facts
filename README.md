@@ -1,6 +1,6 @@
 # update_trusted_facts
 
-Module contains a plan to update trusted facts on nodes in Puppet Enterprise via the console. 
+Module containing a plan to update trusted facts on nodes via the Puppet Enterprise console. 
 
 ## Table of Contents
 
@@ -14,11 +14,11 @@ Module contains a plan to update trusted facts on nodes in Puppet Enterprise via
 
 ## Description
 
-The built in method to update trusted facts in Puppet enterprise requires root shell access to the Puppet primary server. This level of access is generally not available for all users in an organisation and provides significant more access that what should be granted to perform this tasks. 
+The built in method to update trusted facts in Puppet enterprise requires root shell access to the Puppet primary server. This level of access is generally not available to most users in an organisation and provides significant more access than required for this task. 
 
 By using this module, fine grained access can be granted to specific users to update trusted facts via the **update_trusted_facts** plan from the console.
 
-Furthermore this plan preserves all existing facts on an agent certificate and does not rely on the csr_attributes.yaml file being present with the correct data.
+Furthermore this plan preserves all existing facts on an agent certificate and does not rely on the csr_attributes.yaml file being present on a host.
 
 ## Setup
 
@@ -26,7 +26,7 @@ Furthermore this plan preserves all existing facts on an agent certificate and d
 
 This module affects the following
 
-* Updates the csr_attributes.yaml file on systems. Taking the existing trusted facts from agent certificate and merging the proposed changes set in the plan. Existing values in csr_attributes.yaml will be replaced during this process **This occurs when the plan is run in noop**
+* Updates the csr_attributes.yaml file on systems. Taking the existing trusted facts from agent certificate and merging the proposed changes set in the plan. Existing values in csr_attributes.yaml will be replaced during this process **This also occurs when the plan is run in noop**
 * Regenerates the agent certificate using the *puppet infrastructure run regenerate_agent_certificate* **Does not perform this step in noop**
 
 ### Beginning with update_trusted_facts
@@ -44,12 +44,12 @@ Run the plan **update_trusted_facts::update_trusted_facts** from the Puppet Ente
 Targets can be specified as a comma separated list to run the plan on multiple host at a time.
 
 **Optional parameters**
-- preserve_existing_facts (Boolean - whether to keep existing facts. Running the plan with this option set to true and no facts set will clear all trusted facts)
+- preserve_existing_facts (Boolean - whether to keep existing facts. If set to false all existing facts will be wiped and replace with those set in the plan)
 - ignore_infra_status_error (Boolean - Ignore errors from *puppet infrastructure status* command. May allow the plan to operate if some Puppet infrastructure components are failing)
 - noop (Boolean - Run the plan in noop. csr_attributes.yaml will still generated however certificates will not be resigned.)
 
 **Trusted facts supported**
-The following trusted facts are supported by the plan. All are optional parameters, set as required. All accept String as input
+The following trusted facts are supported by the plan. All are optional parameters, set as required. All accept String as input.
 - pp_role
 - pp_uuid
 - pp_environment
