@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 **Features**
 
+- Minor documentation updates
+
 **Bugfixes**
 
 - No longer require a valid API token under the root user on the Puppet primary server.
