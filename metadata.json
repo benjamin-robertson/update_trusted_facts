@@ -1,6 +1,6 @@
 {
   "name": "benjaminrobertson-update_trusted_facts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "benjaminrobertson",
   "summary": "Plan for Puppet enterprise to update trusted facts on nodes.",
   "license": "Apache-2.0",
