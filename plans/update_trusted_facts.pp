@@ -146,7 +146,6 @@ plan update_trusted_facts::update_trusted_facts (
         run_plan('enterprise_tasks::agent_cert_regen',
                 'primary' => $pe_primary_server,
                 'agent'   => $nodes_to_regen_cert)
-        #run_command("puppet infrastructure run regenerate_agent_certificate agent=${nodes_to_regen_cert}", $pe_primary_server)
       }
     }
   }
