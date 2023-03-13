@@ -134,7 +134,7 @@ The targets to run on (note this must match the certnames used by Puppet / shown
 
 Data type: `Stdlib::Fqdn`
 
-The Puppet Enterprise primary server in your PE installation.
+The Puppet Enterprise primary server in your PE installation you are running the plan from.
 
 ##### <a name="preserve_existing_facts"></a>`preserve_existing_facts`
 

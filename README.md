@@ -37,6 +37,8 @@ Include the module within your Puppetfile.
 
 Run the plan **update_trusted_facts::update_trusted_facts** from the Puppet Enterprise console. 
 
+**Note:** If you restrict access to plans via RBAC and only grant users permission to run this plan; you will also need to grant users access to *enterprise_tasks::agent_cert_regen* plan. 
+
 **Required parameters**
 - pe_primary_server (FQDN)
 - targets (TargetSpec - [see here](https://www.puppet.com/docs/bolt/latest/bolt_types_reference.html#targetspec))
