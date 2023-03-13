@@ -143,8 +143,9 @@ plan update_trusted_facts::update_trusted_facts (
     out::message("Nodes to regen certs on ${nodes_to_regen_cert}")
     if $nodes_to_regen_cert != undef {
       if $noop != true {
-        run_task('enterprise_tasks::agent_cert_regen', $pe_primary_server,
-                'agent' => $nodes_to_regen_cert)
+        run_plan('enterprise_tasks::agent_cert_regen',
+                'primary' => $pe_primary_server,
+                'agent'   => $nodes_to_regen_cert)
         #run_command("puppet infrastructure run regenerate_agent_certificate agent=${nodes_to_regen_cert}", $pe_primary_server)
       }
     }
