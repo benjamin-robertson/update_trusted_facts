@@ -54,7 +54,7 @@ def get_existing_csr(csr_attr_file_location)
   if File.exist?(csr_attr_file_location)
     begin
       data = YAML.safe_load(File.read(csr_attr_file_location))
-    rescue => Psych::SyntaxError
+    rescue => exception
       nil
     end
   else
