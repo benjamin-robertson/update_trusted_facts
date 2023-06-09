@@ -15,6 +15,7 @@
 # @param preserve_existing_facts Whether to preserve existing facts from the nodes. If set to false all existing facts will be wiped and replaced with those set in the plan. Default: true
 # @param ignore_infra_status_error Ignore errors from 'puppet infrastructure status' command. This is used to verify the primary server. Can be used to allow the plan the run when some PE components are unavaliable. Default: false
 # @param noop Run the plan in noop. csr_attributes.yaml will still generated, however certificates will not be resigned. Default: false
+# @param support_legacy_pe Attempt to support legacy PE. Default: false
 # @param pp_role Set the pp_role trusted fact. Default: undef
 # @param pp_uuid Set the pp_uuid trusted fact. Default: undef
 # @param pp_environment Set the pp_environment trusted fact. Default: undef
@@ -47,6 +48,7 @@ plan update_trusted_facts::update_trusted_facts (
   Boolean          $preserve_existing_facts   = true,
   Boolean          $ignore_infra_status_error = false,
   Boolean          $noop                      = false,
+  Boolean          $support_legacy_pe         = false,
   Optional[String] $pp_role                   = undef,
   Optional[String] $pp_uuid                   = undef,
   Optional[String] $pp_environment            = undef,
@@ -115,12 +117,17 @@ plan update_trusted_facts::update_trusted_facts (
     if length("${confirm_pe_primary_server_results.ok_set}") <= 2 {
       fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${pe_server_target.name} ")
     }
-    if $confirm_pe_primary_server_results[0].message =~ /^Master server/ {
-      $am_i_primary = 'master'
-      out::message("Detected ${am_i_primary}, using ${am_i_primary} for agent_cert_regen plan")
+    # Check if we are attempting to support legacy PE.
+    if $support_legacy_pe {
+      if $confirm_pe_primary_server_results[0].message =~ /^Master server/ {
+        $am_i_primary = 'master'
+        out::message("Detected ${am_i_primary}, using ${am_i_primary} for agent_cert_regen plan")
+      } else {
+        $am_i_primary = 'primary'
+        out::message("Detected ${am_i_primary}, using ${am_i_primary} for agent_cert_regen plan")
+      }
     } else {
       $am_i_primary = 'primary'
-      out::message("Detected ${am_i_primary}, using ${am_i_primary} for agent_cert_regen plan")
     }
 
     # Create hash with trusted facts

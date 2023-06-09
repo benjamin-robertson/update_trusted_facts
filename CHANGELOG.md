@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 **Features**
 
-- Added support for older Puppet enterprise versions which still use 'master' instead of 'primary server'.
+- Added support for older Puppet enterprise versions which still use 'master' instead of 'primary server'. (must set the support_legacy_pe parameter to true to enable this support)
 
 **Bugfixes**
 
