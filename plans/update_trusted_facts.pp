@@ -115,6 +115,7 @@ plan update_trusted_facts::update_trusted_facts (
     if length("${confirm_pe_primary_server_results.ok_set}") <= 2 {
       fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${pe_server_target.name} ")
     }
+    out::message( "result message is: ${confirm_pe_primary_server_results[0].message}")
 
     # Create hash with trusted facts
     $new_trusted = $trusted_fact_names.reduce({}) | $memo, $value | {
