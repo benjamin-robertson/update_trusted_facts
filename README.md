@@ -89,6 +89,8 @@ Puppet Nodes
 - Windows 2019
 - RHEL 8
 
+To support legacy version of Puppet Enterprise (Before changing naming standard to Primary server from master.) You must set the support_legacy_pe parameter to true.
+
 ## Development
 
 If you find any issues with this module, please log them in the issues register of the GitHub project. [Issues][1]

@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 1.0.0
+
+**Features**
+
+- Added support for older Puppet enterprise versions which still use 'master' instead of 'primary server'. (must set the support_legacy_pe parameter to true to enable this support)
+
+**Bugfixes**
+
+- Added exception handling for reading existing csr_attributes.yaml. Corrupted yaml caused the plan to fail for that node. Csr_attributes data is now ignored if its invalid.
+
 ## Release 0.2.0
 
 **Features**

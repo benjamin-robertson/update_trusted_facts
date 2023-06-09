@@ -98,6 +98,7 @@ The following parameters are available in the `update_trusted_facts::update_trus
 * [`preserve_existing_facts`](#preserve_existing_facts)
 * [`ignore_infra_status_error`](#ignore_infra_status_error)
 * [`noop`](#noop)
+* [`support_legacy_pe`](#support_legacy_pe)
 * [`pp_role`](#pp_role)
 * [`pp_uuid`](#pp_uuid)
 * [`pp_environment`](#pp_environment)
@@ -157,6 +158,14 @@ Default value: ``false``
 Data type: `Boolean`
 
 Run the plan in noop. csr_attributes.yaml will still generated, however certificates will not be resigned. Default: false
+
+Default value: ``false``
+
+##### <a name="support_legacy_pe"></a>`support_legacy_pe`
+
+Data type: `Boolean`
+
+Attempt to support legacy PE. Default: false
 
 Default value: ``false``
 
