@@ -115,7 +115,13 @@ plan update_trusted_facts::update_trusted_facts (
     if length("${confirm_pe_primary_server_results.ok_set}") <= 2 {
       fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${pe_server_target.name} ")
     }
-    out::message( "result message is: ${confirm_pe_primary_server_results[0].message}")
+    if $confirm_pe_primary_server_results[0].message =~ /^Master server/ {
+      $am_i_primary = 'master'
+      out::message("Detected ${am_i_primary}, using ${am_i_primary} for agent_cert_regen plan")
+    } else {
+      $am_i_primary = 'primary'
+      out::message("Detected ${am_i_primary}, using ${am_i_primary} for agent_cert_regen plan")
+    }
 
     # Create hash with trusted facts
     $new_trusted = $trusted_fact_names.reduce({}) | $memo, $value | {
@@ -145,8 +151,8 @@ plan update_trusted_facts::update_trusted_facts (
     if $nodes_to_regen_cert != undef {
       if $noop != true {
         run_plan('enterprise_tasks::agent_cert_regen',
-                'primary' => $pe_primary_server,
-                'agent'   => $nodes_to_regen_cert)
+                $am_i_primary => $pe_primary_server,
+                'agent'       => $nodes_to_regen_cert)
       }
     }
   }
