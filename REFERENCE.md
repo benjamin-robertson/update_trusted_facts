@@ -6,7 +6,7 @@
 
 ### Functions
 
-* [`update_trusted_facts::trusted_fact_names`](#update_trusted_factstrusted_fact_names): Returns an array of trusted facts lint:ignore:140chars
+* [`update_trusted_facts::trusted_fact_names`](#update_trusted_facts--trusted_fact_names): Returns an array of trusted facts lint:ignore:140chars
 
 ### Tasks
 
@@ -15,11 +15,11 @@
 
 ### Plans
 
-* [`update_trusted_facts::update_trusted_facts`](#update_trusted_factsupdate_trusted_facts): PE plan to update trusted facts on a certificate via Puppet enterprise console, while preserving existing trusted facts.
+* [`update_trusted_facts::update_trusted_facts`](#update_trusted_facts--update_trusted_facts): PE plan to update trusted facts on a certificate via Puppet enterprise console, while preserving existing trusted facts.
 
 ## Functions
 
-### <a name="update_trusted_factstrusted_fact_names"></a>`update_trusted_facts::trusted_fact_names`
+### <a name="update_trusted_facts--trusted_fact_names"></a>`update_trusted_facts::trusted_fact_names`
 
 Type: Puppet Language
 
@@ -31,7 +31,7 @@ lint:ignore:140chars
 Returns an array of trusted facts
 lint:ignore:140chars
 
-Returns: `Array`
+Returns: `Array` of trusted facts
 
 ## Tasks
 
@@ -77,7 +77,7 @@ Preserve existing trusted facts
 
 ## Plans
 
-### <a name="update_trusted_factsupdate_trusted_facts"></a>`update_trusted_facts::update_trusted_facts`
+### <a name="update_trusted_facts--update_trusted_facts"></a>`update_trusted_facts::update_trusted_facts`
 
 lint:ignore:140chars lint:ignore:strict_indent
 
@@ -93,279 +93,281 @@ To learn more about Puppet plans, see documentation:
 
 The following parameters are available in the `update_trusted_facts::update_trusted_facts` plan:
 
-* [`targets`](#targets)
-* [`pe_primary_server`](#pe_primary_server)
-* [`preserve_existing_facts`](#preserve_existing_facts)
-* [`ignore_infra_status_error`](#ignore_infra_status_error)
-* [`noop`](#noop)
-* [`support_legacy_pe`](#support_legacy_pe)
-* [`pp_role`](#pp_role)
-* [`pp_uuid`](#pp_uuid)
-* [`pp_environment`](#pp_environment)
-* [`pp_apptier`](#pp_apptier)
-* [`pp_department`](#pp_department)
-* [`pp_datacenter`](#pp_datacenter)
-* [`pp_instance_id`](#pp_instance_id)
-* [`pp_image_name`](#pp_image_name)
-* [`pp_preshared_key`](#pp_preshared_key)
-* [`pp_cost_center`](#pp_cost_center)
-* [`pp_product`](#pp_product)
-* [`pp_project`](#pp_project)
-* [`pp_application`](#pp_application)
-* [`pp_service`](#pp_service)
-* [`pp_employee`](#pp_employee)
-* [`pp_created_by`](#pp_created_by)
-* [`pp_software_version`](#pp_software_version)
-* [`pp_cluster`](#pp_cluster)
-* [`pp_provisioner`](#pp_provisioner)
-* [`pp_region`](#pp_region)
-* [`pp_zone`](#pp_zone)
-* [`pp_network`](#pp_network)
-* [`pp_securitypolicy`](#pp_securitypolicy)
-* [`pp_cloudplatform`](#pp_cloudplatform)
-* [`pp_hostname`](#pp_hostname)
+* [`targets`](#-update_trusted_facts--update_trusted_facts--targets)
+* [`pe_primary_server`](#-update_trusted_facts--update_trusted_facts--pe_primary_server)
+* [`preserve_existing_facts`](#-update_trusted_facts--update_trusted_facts--preserve_existing_facts)
+* [`ignore_infra_status_error`](#-update_trusted_facts--update_trusted_facts--ignore_infra_status_error)
+* [`noop`](#-update_trusted_facts--update_trusted_facts--noop)
+* [`support_legacy_pe`](#-update_trusted_facts--update_trusted_facts--support_legacy_pe)
+* [`pp_role`](#-update_trusted_facts--update_trusted_facts--pp_role)
+* [`pp_uuid`](#-update_trusted_facts--update_trusted_facts--pp_uuid)
+* [`pp_environment`](#-update_trusted_facts--update_trusted_facts--pp_environment)
+* [`pp_apptier`](#-update_trusted_facts--update_trusted_facts--pp_apptier)
+* [`pp_department`](#-update_trusted_facts--update_trusted_facts--pp_department)
+* [`pp_datacenter`](#-update_trusted_facts--update_trusted_facts--pp_datacenter)
+* [`pp_instance_id`](#-update_trusted_facts--update_trusted_facts--pp_instance_id)
+* [`pp_image_name`](#-update_trusted_facts--update_trusted_facts--pp_image_name)
+* [`pp_preshared_key`](#-update_trusted_facts--update_trusted_facts--pp_preshared_key)
+* [`pp_cost_center`](#-update_trusted_facts--update_trusted_facts--pp_cost_center)
+* [`pp_product`](#-update_trusted_facts--update_trusted_facts--pp_product)
+* [`pp_project`](#-update_trusted_facts--update_trusted_facts--pp_project)
+* [`pp_application`](#-update_trusted_facts--update_trusted_facts--pp_application)
+* [`pp_service`](#-update_trusted_facts--update_trusted_facts--pp_service)
+* [`pp_employee`](#-update_trusted_facts--update_trusted_facts--pp_employee)
+* [`pp_created_by`](#-update_trusted_facts--update_trusted_facts--pp_created_by)
+* [`pp_software_version`](#-update_trusted_facts--update_trusted_facts--pp_software_version)
+* [`pp_cluster`](#-update_trusted_facts--update_trusted_facts--pp_cluster)
+* [`pp_provisioner`](#-update_trusted_facts--update_trusted_facts--pp_provisioner)
+* [`pp_region`](#-update_trusted_facts--update_trusted_facts--pp_region)
+* [`pp_zone`](#-update_trusted_facts--update_trusted_facts--pp_zone)
+* [`pp_network`](#-update_trusted_facts--update_trusted_facts--pp_network)
+* [`pp_securitypolicy`](#-update_trusted_facts--update_trusted_facts--pp_securitypolicy)
+* [`pp_cloudplatform`](#-update_trusted_facts--update_trusted_facts--pp_cloudplatform)
+* [`pp_hostname`](#-update_trusted_facts--update_trusted_facts--pp_hostname)
 
-##### <a name="targets"></a>`targets`
+##### <a name="-update_trusted_facts--update_trusted_facts--targets"></a>`targets`
 
 Data type: `TargetSpec`
 
 The targets to run on (note this must match the certnames used by Puppet / shown in PE console).
 
-##### <a name="pe_primary_server"></a>`pe_primary_server`
+##### <a name="-update_trusted_facts--update_trusted_facts--pe_primary_server"></a>`pe_primary_server`
 
-Data type: `Stdlib::Fqdn`
+Data type: `Optional[Stdlib::Fqdn]`
 
-The Puppet Enterprise primary server in your PE installation you are running the plan from.
+The Puppet Enterprise primary server in your PE installation you are running the plan from. Update_trusted_facts will automatically attempt to resolve the primary using the pe_status_check_role fact. Setting this parameter will override that behaviour.
 
-##### <a name="preserve_existing_facts"></a>`preserve_existing_facts`
+Default value: `undef`
+
+##### <a name="-update_trusted_facts--update_trusted_facts--preserve_existing_facts"></a>`preserve_existing_facts`
 
 Data type: `Boolean`
 
 Whether to preserve existing facts from the nodes. If set to false all existing facts will be wiped and replaced with those set in the plan. Default: true
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="ignore_infra_status_error"></a>`ignore_infra_status_error`
+##### <a name="-update_trusted_facts--update_trusted_facts--ignore_infra_status_error"></a>`ignore_infra_status_error`
 
 Data type: `Boolean`
 
 Ignore errors from 'puppet infrastructure status' command. This is used to verify the primary server. Can be used to allow the plan the run when some PE components are unavaliable. Default: false
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="noop"></a>`noop`
+##### <a name="-update_trusted_facts--update_trusted_facts--noop"></a>`noop`
 
 Data type: `Boolean`
 
 Run the plan in noop. csr_attributes.yaml will still generated, however certificates will not be resigned. Default: false
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="support_legacy_pe"></a>`support_legacy_pe`
+##### <a name="-update_trusted_facts--update_trusted_facts--support_legacy_pe"></a>`support_legacy_pe`
 
 Data type: `Boolean`
 
 Attempt to support legacy PE. Default: false
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="pp_role"></a>`pp_role`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_role"></a>`pp_role`
 
 Data type: `Optional[String]`
 
 Set the pp_role trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_uuid"></a>`pp_uuid`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_uuid"></a>`pp_uuid`
 
 Data type: `Optional[String]`
 
 Set the pp_uuid trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_environment"></a>`pp_environment`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_environment"></a>`pp_environment`
 
 Data type: `Optional[String]`
 
 Set the pp_environment trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_apptier"></a>`pp_apptier`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_apptier"></a>`pp_apptier`
 
 Data type: `Optional[String]`
 
 Set the pp_apptier trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_department"></a>`pp_department`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_department"></a>`pp_department`
 
 Data type: `Optional[String]`
 
 Set the pp_department trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_datacenter"></a>`pp_datacenter`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_datacenter"></a>`pp_datacenter`
 
 Data type: `Optional[String]`
 
 Set the pp_datacenter trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_instance_id"></a>`pp_instance_id`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_instance_id"></a>`pp_instance_id`
 
 Data type: `Optional[String]`
 
 Set the pp_instance_id trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_image_name"></a>`pp_image_name`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_image_name"></a>`pp_image_name`
 
 Data type: `Optional[String]`
 
 Set the pp_image_name trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_preshared_key"></a>`pp_preshared_key`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_preshared_key"></a>`pp_preshared_key`
 
 Data type: `Optional[String]`
 
 Set the pp_preshared_key trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_cost_center"></a>`pp_cost_center`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_cost_center"></a>`pp_cost_center`
 
 Data type: `Optional[String]`
 
 Set the pp_cost_center trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_product"></a>`pp_product`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_product"></a>`pp_product`
 
 Data type: `Optional[String]`
 
 Set the pp_product trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_project"></a>`pp_project`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_project"></a>`pp_project`
 
 Data type: `Optional[String]`
 
 Set the pp_project trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_application"></a>`pp_application`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_application"></a>`pp_application`
 
 Data type: `Optional[String]`
 
 Set the pp_application trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_service"></a>`pp_service`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_service"></a>`pp_service`
 
 Data type: `Optional[String]`
 
 Set the pp_service trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_employee"></a>`pp_employee`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_employee"></a>`pp_employee`
 
 Data type: `Optional[String]`
 
 Set the pp_employee trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_created_by"></a>`pp_created_by`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_created_by"></a>`pp_created_by`
 
 Data type: `Optional[String]`
 
 Set the pp_created_by trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_software_version"></a>`pp_software_version`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_software_version"></a>`pp_software_version`
 
 Data type: `Optional[String]`
 
 Set the pp_software_version trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_cluster"></a>`pp_cluster`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_cluster"></a>`pp_cluster`
 
 Data type: `Optional[String]`
 
 Set the pp_cluster trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_provisioner"></a>`pp_provisioner`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_provisioner"></a>`pp_provisioner`
 
 Data type: `Optional[String]`
 
 Set the pp_provisioner trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_region"></a>`pp_region`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_region"></a>`pp_region`
 
 Data type: `Optional[String]`
 
 Set the pp_region trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_zone"></a>`pp_zone`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_zone"></a>`pp_zone`
 
 Data type: `Optional[String]`
 
 Set the pp_zone trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_network"></a>`pp_network`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_network"></a>`pp_network`
 
 Data type: `Optional[String]`
 
 Set the pp_network trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_securitypolicy"></a>`pp_securitypolicy`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_securitypolicy"></a>`pp_securitypolicy`
 
 Data type: `Optional[String]`
 
 Set the pp_securitypolicy trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_cloudplatform"></a>`pp_cloudplatform`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_cloudplatform"></a>`pp_cloudplatform`
 
 Data type: `Optional[String]`
 
 Set the pp_cloudplatform trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pp_hostname"></a>`pp_hostname`
+##### <a name="-update_trusted_facts--update_trusted_facts--pp_hostname"></a>`pp_hostname`
 
 Data type: `Optional[String]`
 
 Set the pp_hostname trusted fact. Default: undef
 
-Default value: ``undef``
+Default value: `undef`
 

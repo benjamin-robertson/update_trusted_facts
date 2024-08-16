@@ -11,7 +11,7 @@
 # - https://www.puppet.com/docs/pe/2021.7/plans_limitations.html
 #
 # @param targets The targets to run on (note this must match the certnames used by Puppet / shown in PE console).
-# @param pe_primary_server The Puppet Enterprise primary server in your PE installation you are running the plan from. 
+# @param pe_primary_server The Puppet Enterprise primary server in your PE installation you are running the plan from. Update_trusted_facts will automatically attempt to resolve the primary using the pe_status_check_role fact. Setting this parameter will override that behaviour. 
 # @param preserve_existing_facts Whether to preserve existing facts from the nodes. If set to false all existing facts will be wiped and replaced with those set in the plan. Default: true
 # @param ignore_infra_status_error Ignore errors from 'puppet infrastructure status' command. This is used to verify the primary server. Can be used to allow the plan the run when some PE components are unavaliable. Default: false
 # @param noop Run the plan in noop. csr_attributes.yaml will still generated, however certificates will not be resigned. Default: false
@@ -43,37 +43,37 @@
 # @param pp_hostname Set the pp_hostname trusted fact. Default: undef
 #
 plan update_trusted_facts::update_trusted_facts (
-  TargetSpec       $targets,
-  Stdlib::Fqdn     $pe_primary_server,
-  Boolean          $preserve_existing_facts   = true,
-  Boolean          $ignore_infra_status_error = false,
-  Boolean          $noop                      = false,
-  Boolean          $support_legacy_pe         = false,
-  Optional[String] $pp_role                   = undef,
-  Optional[String] $pp_uuid                   = undef,
-  Optional[String] $pp_environment            = undef,
-  Optional[String] $pp_apptier                = undef,
-  Optional[String] $pp_department             = undef,
-  Optional[String] $pp_datacenter             = undef,
-  Optional[String] $pp_instance_id            = undef,
-  Optional[String] $pp_image_name             = undef,
-  Optional[String] $pp_preshared_key          = undef,
-  Optional[String] $pp_cost_center            = undef,
-  Optional[String] $pp_product                = undef,
-  Optional[String] $pp_project                = undef,
-  Optional[String] $pp_application            = undef,
-  Optional[String] $pp_service                = undef,
-  Optional[String] $pp_employee               = undef,
-  Optional[String] $pp_created_by             = undef,
-  Optional[String] $pp_software_version       = undef,
-  Optional[String] $pp_cluster                = undef,
-  Optional[String] $pp_provisioner            = undef,
-  Optional[String] $pp_region                 = undef,
-  Optional[String] $pp_zone                   = undef,
-  Optional[String] $pp_network                = undef,
-  Optional[String] $pp_securitypolicy         = undef,
-  Optional[String] $pp_cloudplatform          = undef,
-  Optional[String] $pp_hostname               = undef,
+  TargetSpec             $targets,
+  Optional[Stdlib::Fqdn] $pe_primary_server         = undef,
+  Boolean                $preserve_existing_facts   = true,
+  Boolean                $ignore_infra_status_error = false,
+  Boolean                $noop                      = false,
+  Boolean                $support_legacy_pe         = false,
+  Optional[String]       $pp_role                   = undef,
+  Optional[String]       $pp_uuid                   = undef,
+  Optional[String]       $pp_environment            = undef,
+  Optional[String]       $pp_apptier                = undef,
+  Optional[String]       $pp_department             = undef,
+  Optional[String]       $pp_datacenter             = undef,
+  Optional[String]       $pp_instance_id            = undef,
+  Optional[String]       $pp_image_name             = undef,
+  Optional[String]       $pp_preshared_key          = undef,
+  Optional[String]       $pp_cost_center            = undef,
+  Optional[String]       $pp_product                = undef,
+  Optional[String]       $pp_project                = undef,
+  Optional[String]       $pp_application            = undef,
+  Optional[String]       $pp_service                = undef,
+  Optional[String]       $pp_employee               = undef,
+  Optional[String]       $pp_created_by             = undef,
+  Optional[String]       $pp_software_version       = undef,
+  Optional[String]       $pp_cluster                = undef,
+  Optional[String]       $pp_provisioner            = undef,
+  Optional[String]       $pp_region                 = undef,
+  Optional[String]       $pp_zone                   = undef,
+  Optional[String]       $pp_network                = undef,
+  Optional[String]       $pp_securitypolicy         = undef,
+  Optional[String]       $pp_cloudplatform          = undef,
+  Optional[String]       $pp_hostname               = undef,
 ) {
   # get targets
   $full_list = get_targets($targets)
@@ -83,9 +83,8 @@ plan update_trusted_facts::update_trusted_facts (
 
   unless $full_list.empty {
     # Check connection to hosts. run_plan does not exit cleanly if there is a host which doesnt exist or isnt connected, We use this task
-    # to check if hosts are valid and have a valid connection to PE. This can be switched to a faster running task to speed up plan 
-    # execution as we do not actually use the results from this task.
-    $factresults = run_task(facts, $full_list, _catch_errors => true)
+    # to check if hosts are valid and have a valid connection to PE. 
+    $factresults = run_task(enterprise_tasks::test_connect, $full_list, _catch_errors => true)
 
     $full_list_failed = $factresults.error_set.names
     $full_list_success = $factresults.ok_set.names
@@ -106,7 +105,21 @@ plan update_trusted_facts::update_trusted_facts (
 
     out::message("Supported targets are ${remove_any_pe_targets}")
 
-    $pe_server_target = get_target($pe_primary_server)
+    # Get primary server
+    if $pe_primary_server == undef {
+      $pe_status_results = puppetdb_query('inventory[certname] { facts.pe_status_check_role = "primary" }')
+      if $pe_status_results.length != 1 {
+        fail("Could not identify the primary server. Confirm pe_status_check_role fact is working correctly. Alternatively the priamry server can be set via the pe_primary_server parameter. Results: ${pe_role_results}")
+      } else {
+        # We found a single primary server :)
+        $pe_target_certname = $pe_status_results.map | Hash $node | { $node['certname'] }
+        $pe_server_target = get_target($pe_target_certname)
+      }
+    } else {
+      $pe_server_target = get_target($pe_primary_server)
+    }
+
+    out::message("Primary server is ${pe_server_target}")
 
     # Confirm the pe_primary_server is the primary server. This can only be run on the primary server.
     $confirm_pe_primary_server_results = run_task('update_trusted_facts::confirm_primary_server', $pe_server_target,
@@ -158,7 +171,7 @@ plan update_trusted_facts::update_trusted_facts (
     if $nodes_to_regen_cert != undef {
       if $noop != true {
         run_plan('enterprise_tasks::agent_cert_regen',
-                $am_i_primary => $pe_primary_server,
+                $am_i_primary => $pe_server_target,
                 'agent'       => $nodes_to_regen_cert)
       }
     }
