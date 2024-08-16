@@ -112,7 +112,8 @@ plan update_trusted_facts::update_trusted_facts (
         fail("Could not identify the primary server. Confirm pe_status_check_role fact is working correctly. Alternatively the priamry server can be set via the pe_primary_server parameter. Results: ${pe_role_results}")
       } else {
         # We found a single primary server :)
-        $pe_server_target = get_target($pe_status_results)
+        $pe_target_certname = $pe_status_results.map | Hash $node | { $node['certname'] }
+        $pe_server_target = get_target($pe_target_certname)
       }
     } else {
       $pe_server_target = get_target($pe_primary_server)
