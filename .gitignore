@@ -4,6 +4,7 @@
 .yardoc
 .yardwarns
 *.iml
+Gemfile.lock
 /.bundle/
 /.idea/
 /.vagrant/
