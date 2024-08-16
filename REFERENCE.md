@@ -133,9 +133,9 @@ The targets to run on (note this must match the certnames used by Puppet / shown
 
 ##### <a name="-update_trusted_facts--update_trusted_facts--pe_primary_server"></a>`pe_primary_server`
 
-Data type: `Stdlib::Fqdn`
+Data type: `Optional[Stdlib::Fqdn]`
 
-The Puppet Enterprise primary server in your PE installation you are running the plan from.
+The Puppet Enterprise primary server in your PE installation you are running the plan from. Update_trusted_facts will automatically attempt to resolve the primary using the pe_status_check_role fact. Setting this parameter will override that behaviour.
 
 Default value: `undef`
 

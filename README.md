@@ -1,6 +1,6 @@
 # update_trusted_facts
 
-Module containing a plan to update trusted facts on nodes via the Puppet Enterprise console. 
+Module containing a plan to update [trusted facts][2] on nodes via the Puppet Enterprise console. 
 
 ## Table of Contents
 
@@ -40,12 +40,12 @@ Run the plan **update_trusted_facts::update_trusted_facts** from the Puppet Ente
 **Note:** If you restrict access to plans via RBAC and only grant users permission to run this plan; you will also need to grant users access to *enterprise_tasks::agent_cert_regen* plan. 
 
 **Required parameters**
-- pe_primary_server (FQDN)
 - targets (TargetSpec - [see here](https://www.puppet.com/docs/bolt/latest/bolt_types_reference.html#targetspec))
 
 Targets can be specified as a comma separated list to run the plan on multiple host at a time.
 
 **Optional parameters**
+- pe_primary_server (FQDN) - Update_trusted_facts will automatically attempt to resolve the primary using the pe_status_check_role fact. Setting this parameter will override that behaviour. 
 - preserve_existing_facts (Boolean - whether to keep existing facts. If set to false all existing facts will be wiped and replace with those set in the plan)
 - ignore_infra_status_error (Boolean - Ignore errors from *puppet infrastructure status* command. May allow the plan to operate if some Puppet infrastructure components are failing)
 - noop (Boolean - Run the plan in noop. csr_attributes.yaml will still generated however certificates will not be resigned.)
@@ -96,3 +96,4 @@ To support legacy version of Puppet Enterprise (Before changing naming standard 
 If you find any issues with this module, please log them in the issues register of the GitHub project. [Issues][1]
 
 [1]: https://github.com/benjamin-robertson/update_trusted_facts/issues
+[2]: https://www.puppet.com/docs/puppet/latest/ssl_attributes_extensions.html#puppet_registered_ids
