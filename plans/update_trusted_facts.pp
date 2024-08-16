@@ -44,7 +44,7 @@
 #
 plan update_trusted_facts::update_trusted_facts (
   TargetSpec       $targets,
-  Stdlib::Fqdn     $pe_primary_server,
+  Stdlib::Fqdn     $pe_primary_server         = undef,
   Boolean          $preserve_existing_facts   = true,
   Boolean          $ignore_infra_status_error = false,
   Boolean          $noop                      = false,
@@ -83,9 +83,8 @@ plan update_trusted_facts::update_trusted_facts (
 
   unless $full_list.empty {
     # Check connection to hosts. run_plan does not exit cleanly if there is a host which doesnt exist or isnt connected, We use this task
-    # to check if hosts are valid and have a valid connection to PE. This can be switched to a faster running task to speed up plan 
-    # execution as we do not actually use the results from this task.
-    $factresults = run_task(facts, $full_list, _catch_errors => true)
+    # to check if hosts are valid and have a valid connection to PE. 
+    $factresults = run_task(enterprise_task::test_connect, $full_list, _catch_errors => true)
 
     $full_list_failed = $factresults.error_set.names
     $full_list_success = $factresults.ok_set.names
@@ -106,7 +105,18 @@ plan update_trusted_facts::update_trusted_facts (
 
     out::message("Supported targets are ${remove_any_pe_targets}")
 
-    $pe_server_target = get_target($pe_primary_server)
+    # Get primary server
+    if $pe_primary_server == undef {
+      $pe_status_results = puppetdb_query('inventory[certname] { facts.pe_status_check_role = "primary" }')
+      if $pe_status_results.length != 1 {
+        fail("Could not identify the primary server. Confirm pe_status_check_role fact is working correctly. Alternatively the priamry server can be set via the pe_primary_server parameter. Results: ${pe_role_results}")
+      } else {
+        # We found a single primary server :)
+        $pe_server_target = get_target($pe_status_results)
+      }
+    } else {
+      $pe_server_target = get_target($pe_primary_server)
+    }
 
     # Confirm the pe_primary_server is the primary server. This can only be run on the primary server.
     $confirm_pe_primary_server_results = run_task('update_trusted_facts::confirm_primary_server', $pe_server_target,

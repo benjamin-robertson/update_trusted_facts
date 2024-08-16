@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.0.0
+
+**Features**
+
+- Improve plan run time by using `enterprise_task::test_connect` to verify connectivity. Thanks chambersmp
+- Bumped PDK to version 3.2.0
+- Plan can now automatically detect the primary server thanks to the `pe_status_check_role` fact. 
+
 ## Release 1.0.0
 
 **Features**
