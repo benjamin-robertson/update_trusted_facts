@@ -84,7 +84,7 @@ plan update_trusted_facts::update_trusted_facts (
   unless $full_list.empty {
     # Check connection to hosts. run_plan does not exit cleanly if there is a host which doesnt exist or isnt connected, We use this task
     # to check if hosts are valid and have a valid connection to PE. 
-    $factresults = run_task(enterprise_task::test_connect, $full_list, _catch_errors => true)
+    $factresults = run_task(enterprise_tasks::test_connect, $full_list, _catch_errors => true)
 
     $full_list_failed = $factresults.error_set.names
     $full_list_success = $factresults.ok_set.names
