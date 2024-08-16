@@ -31,7 +31,7 @@ lint:ignore:140chars
 Returns an array of trusted facts
 lint:ignore:140chars
 
-Returns: `Array`
+Returns: `Array` of trusted facts
 
 ## Tasks
 
